@@ -1,0 +1,39 @@
+.home_container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    row-gap: 4rem;
+    padding: 2rem;
+}
+
+.each_post {
+    background-color: white;
+    width: 350px;
+    height: 350px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    padding: 1rem;
+}
+
+.each_post > div {
+    display: flex;
+    justify-content: space-between
+}
+
+.each_post > h3 {
+    text-align: center;
+    margin: 4px;
+}
+
+.each_post > div > button {
+    background-color: #e73c63;
+        color: white;
+        padding: 1rem;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: .5s ease-in-out;
+        border: none;
+        margin-top: 0.3rem;
+}
+.each_post > div > button:hover {
+    background-color: #502630;
+    color: white;
+}

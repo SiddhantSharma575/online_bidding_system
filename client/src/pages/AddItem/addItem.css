@@ -1,0 +1,46 @@
+.add_item_container {
+    background-color: white;
+    width: 60vw;
+    height: 60vh;
+    margin-top: 4rem;
+    margin-left: 16rem;
+    padding: 1rem;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    display: flex;
+}
+
+
+.add_item_left {
+    height: 100%;
+    width: 50%;
+    display : flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.add_item_right {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 100%;
+    width: 50%;
+    padding: 3rem;
+}
+
+.add_item_right > div {
+    display: flex;
+    flex-direction: column;
+}
+.add_item_right > div > label {
+    margin-bottom: 2rem;
+}
+
+.add_item_right > button {
+    background-color: #e73c63;
+    color: white;
+    padding: 1rem;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
+}

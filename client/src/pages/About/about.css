@@ -1,0 +1,14 @@
+.about_container {
+    width: 70vw;
+    height:40vh;
+    background-color: #e73c63;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 8rem;
+    margin-left: 15rem;
+    padding: 1rem;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
