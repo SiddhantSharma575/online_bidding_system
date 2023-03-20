@@ -11,8 +11,13 @@ const Register = () => {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState("")
 
     const handleRegister = async () => {
+        if (!username || !email || !password) {
+            setError("All Fields are Required!")
+            return;
+        }
         setLoading(true)
         const result = await axios.post("http://localhost:4000/auth/register", {
             username: username,
@@ -31,9 +36,19 @@ const Register = () => {
             <div className="form_container">
                 <div className='left_side'>
                     <h4>Sign Up</h4>
-                    <OutlinedInput placeholder='Enter Username' value={username} onChange={(e) => setUserName(e.target.value)} />
-                    <OutlinedInput placeholder='Enter Email' type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                    <OutlinedInput placeholder='Enter Password' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    {error && <h4>{error}</h4>}
+                    <OutlinedInput placeholder='Enter Username' value={username} onChange={(e) => {
+                        setUserName(e.target.value);
+                        setError("");
+                    }} />
+                    <OutlinedInput placeholder='Enter Email' type="email" value={email} onChange={(e) => {
+                        setEmail(e.target.value);
+                        setError("");
+                    }} />
+                    <OutlinedInput placeholder='Enter Password' type="password" value={password} onChange={(e) => {
+                        setPassword(e.target.value);
+                        setError("");
+                    }} />
                     <button className='btn' onClick={handleRegister} >Register</button>
                     <button className='btn' onClick={() => navigate("/login")} >Login</button>
                     {loading && <h4>Loading...</h4>}

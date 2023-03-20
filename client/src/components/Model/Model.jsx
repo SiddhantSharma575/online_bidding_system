@@ -1,7 +1,6 @@
 import React from 'react'
 import './model.css'
 import OutlinedInput from '@mui/material/OutlinedInput';
-
 import { RiCloseLine } from "react-icons/ri";
 import { useState } from 'react';
 import { useEffect } from 'react';
@@ -40,40 +39,54 @@ const Model = ({ setIsOpen, currentProduct, socket }) => {
             navigate("/")
             setIsOpen(false)
         } else {
-            setError("Price must be greater than" + currentProduct.price)
-            setIsOpen(false)
+            setError("Price must be greater than " + currentProduct.price)
+            // setIsOpen(false)
         }
     }
     return (
         <>
             <div className="darkBG" onClick={() => setIsOpen(false)} />
             <div className="centered">
-                <div className="modal">
-                    <div className="modalHeader">
-                        <h5 className="heading">Update Item</h5>
-                    </div>
-                    <button className="closeBtn" onClick={() => setIsOpen(false)}>
-                        <RiCloseLine style={{ marginBottom: "-3px" }} />
-                    </button>
-                    <div className="modalContent">
-                        <OutlinedInput placeholder="Enter Product Name" value={currentProduct.product_name} />
-                        <OutlinedInput placeholder='Enter New Price' type="number" value={newPrice} onChange={(e) => setNewPrice(e.target.value)} />
-                        {loading && <h4>Loading...</h4>}
-                    </div>
-                    <div className="modalActions">
-                        <div className="actionsContainer">
-                            <button className="deleteBtn" onClick={handleUpdate}>
-                                Update
-                            </button>
-                            <button
-                                className="cancelBtn"
-                                onClick={() => setIsOpen(false)}
-                            >
-                                Cancel
-                            </button>
+                {!user ? <div className='modal'>
+                    <h4 style={{ color: "#000", padding: "1rem" }}>
+                        Please Login to access it
+                    </h4> </div> :
+                    <div className="modal">
+                        <div className="modalHeader">
+                            <h5 className="heading">Update Item</h5>
+                        </div>
+
+                        <button className="closeBtn" onClick={() => setIsOpen(false)}>
+                            <RiCloseLine style={{ marginBottom: "-3px" }} />
+                        </button>
+                        <div className="modalContent">
+                            <OutlinedInput placeholder="Enter Product Name" value={currentProduct.product_name} />
+                            <OutlinedInput placeholder='Enter New Price' type="number" value={newPrice} onChange={(e) => {
+                                setError("");
+                                setLoading(false)
+                                setNewPrice(e.target.value)
+                            }}
+                            />
+                            {loading && <h4>Loading...</h4>}
+                            {
+                                error.length > 0 && <span>{error}</span>
+                            }
+                        </div>
+                        <div className="modalActions">
+                            <div className="actionsContainer">
+                                <button className="deleteBtn" onClick={handleUpdate}>
+                                    Update
+                                </button>
+                                <button
+                                    className="cancelBtn"
+                                    onClick={() => setIsOpen(false)}
+                                >
+                                    Cancel
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                }
             </div>
         </>
     );

@@ -10,13 +10,24 @@ const Login = () => {
     const [username, setUserName] = useState("")
     const [password, setPassword] = useState("")
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState("")
 
     const handleLogin = async () => {
+        if (!username || !password) {
+            setError("All Fields are Required!");
+            return;
+        }
         setLoading(true)
         const res = await axios.post("http://localhost:4000/auth/login", {
             username: username,
             password: password
         })
+        console.log(res.data)
+        if (res.data.status === "Error") {
+            setError("Invalid Username or Password");
+            setLoading(false);
+            return;
+        }
         localStorage.setItem("user", JSON.stringify(res.data.user))
         setUserName("")
         setPassword("")
@@ -32,11 +43,19 @@ const Login = () => {
                 </div>
                 <div className='left_side'>
                     <h4>Sign In</h4>
-                    <OutlinedInput placeholder='Enter Username' value={username} onChange={(e) => setUserName(e.target.value)} />
-                    <OutlinedInput placeholder='Enter Password' type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+                    <OutlinedInput placeholder='Enter Username' value={username} onChange={(e) => {
+                        setUserName(e.target.value);
+                        setError("")
+                    }
+                    } />
+                    <OutlinedInput placeholder='Enter Password' type="password" value={password} onChange={(e) => {
+                        setPassword(e.target.value);
+                        setError("");
+                    }} />
                     <button className='btn' onClick={handleLogin} >Login</button>
                     <button className='btn' onClick={() => navigate("/register")} >Register</button>
                     {loading && <h4>Loading...</h4>}
+                    {error && <h4>{error}</h4>}
                 </div>
             </div>
         </div>

@@ -10,14 +10,17 @@ const Home = ({ socket }) => {
     const [user, setUser] = useState("")
     const [products, setProducts] = useState([])
     const [currentProduct, setCurrentProduct] = useState()
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
+        setLoading(true)
         const userData = JSON.parse(localStorage.getItem("user"))
         setUser(userData)
         const getProducts = async () => {
             try {
                 const res = await axios.get("http://localhost:4000/product/all")
                 setProducts(res.data)
+                setLoading(false)
             } catch (error) {
                 console.log(error)
             }
@@ -51,6 +54,7 @@ const Home = ({ socket }) => {
         <>
             <Header />
             <div className="home_container">
+                {loading && <h1>Loading...</h1>}
                 {
                     products.map((product) => (
                         <div className='each_post' key={product._id}>

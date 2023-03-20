@@ -16,6 +16,7 @@ const AddItem = ({ socket }) => {
     const [price, setPrice] = useState("")
     const [file, setFile] = useState("")
     const [loading, setLoading] = useState(false)
+    const [error, setError] = useState("")
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem("user"))
         setUser(user)
@@ -23,6 +24,11 @@ const AddItem = ({ socket }) => {
 
     const handleAdd = async () => {
         setLoading(true);
+        if (!productName || !price || !file) {
+            setError("All Items are Required!");
+            setLoading(false)
+            return;
+        }
         if (!file) return;
         const storageRef = ref(storage, `files/${file.name}`);
         const uploadTask = uploadBytesResumable(storageRef, file);
@@ -69,8 +75,17 @@ const AddItem = ({ socket }) => {
             <div className="add_item_container" style={{ position: "relative" }}>
                 <h5 style={{ textAlign: "center", position: "absolute", left: 440 }} >Add an Product</h5>
                 <div className='add_item_left'>
-                    <OutlinedInput placeholder="Enter Product Name" value={productName} onChange={(e) => setProductName(e.target.value)} />
-                    <OutlinedInput placeholder='Enter Price' type="number" value={price} onChange={(e) => setPrice(e.target.value)} />
+                    <OutlinedInput placeholder="Enter Product Name" value={productName} onChange={(e) => {
+                        setProductName(e.target.value);
+                        setError("");
+                        setLoading(false);
+                    }
+                    } />
+                    <OutlinedInput placeholder='Enter Price' type="number" value={price} onChange={(e) => {
+                        setPrice(e.target.value)
+                        setError("");
+                        setLoading(false);
+                    }} />
                     <OutlinedInput placeholder='Enter Username' value={user.username} />
                 </div>
                 <div className='add_item_right'>
@@ -80,6 +95,7 @@ const AddItem = ({ socket }) => {
                     </div>
                     <button onClick={handleAdd} >Add</button>
                     {loading && <h4>Loading...</h4>}
+                    {error && <h4>{error}</h4>}
                 </div>
             </div>
         </>
